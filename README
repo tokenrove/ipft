@@ -1,0 +1,18 @@
+
+This cool idea was conceived by Jamie Gamble <bit@distorted.wiw.org>,
+who wrote a paper on it.
+
+The implementation was done by Julian Squires <tek@wiw.org> after reading
+a pre-release version of this paper.
+
+Some notes:
+
+I would like to implement sizing the buffer using path MTU discovery.
+I suppose that will occur soon enough.
+
+The current code is somewhat fragile -- data loss could occur if
+values are arbitrarily fucked with or if the MTU along the path
+suddenly changes.
+
+Randomly generated and changing frag values, IDs, whatever, would
+be nice (based on a pre-established seed, perhaps).
