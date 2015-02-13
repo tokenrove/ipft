@@ -2,10 +2,12 @@
  * ipft -- IP Fragment Tunnelling
  * Concept by Jamie Gamble <bit@distorted.wiw.org>
  * Implementation by Julian Squires <tek@wiw.org>
- * All rights reserved.
+ * See the file COPYING for license details.
  */
 
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include <netinet/in.h>
 #include <netdb.h>
@@ -30,7 +32,7 @@ int main(int argc, char **argv)
 	if(argv[i][0] == '-') {
 	} else {
 	    hent = gethostbyname(argv[i]);
-	    printf("%s %lx\n", hent->h_name, *((long *)hent->h_addr_list[0]));
+            printf("%s %x\n", hent->h_name, *((uint32_t *)hent->h_addr_list[0]));
 	    memcpy(&saddr.sin_addr, hent->h_addr_list[0], hent->h_length);
 	}
     }

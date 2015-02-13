@@ -1,3 +1,4 @@
+/* See the file COPYING for license details. */
 
 #include <sys/socket.h>
 #include <sys/select.h>
@@ -44,25 +45,25 @@ transmitter_t *linux_tx_open(struct sockaddr_in *destaddr)
     struct private_s *priv;
     int i;
 
-    tx = malloc(sizeof(tx));
+    tx = malloc(sizeof(*tx));
     if(tx == NULL) return NULL;
 
-    priv = malloc(sizeof(priv));
+    priv = malloc(sizeof(*priv));
     if(priv == NULL) return NULL;
 
     /* Pretend to be fragmented TCP */
     priv->fd = socket(PF_INET, SOCK_RAW, IPPROTO_RAW);
     if(priv->fd < 0)
-	bomb(__FUNCTION__" failed: %s\n", strerror(errno));
+        bomb("%s: failed: %s\n", __FUNCTION__, strerror(errno));
     i = 1;
     if(setsockopt(priv->fd, SOL_IP, IP_HDRINCL, &i, sizeof(i)) < 0)
-	bomb(__FUNCTION__" failed: %s\n", strerror(errno));
+        bomb("%s: failed: %s\n", __FUNCTION__, strerror(errno));
 
     destaddr->sin_port = htons(IPPROTO_TCP);
     i = connect(priv->fd, (const struct sockaddr *)destaddr,
 		sizeof(*destaddr));
     if(i < 0)
-	bomb(__FUNCTION__" failed: %s\n", strerror(errno));
+        bomb("%s: failed: %s\n", __FUNCTION__, strerror(errno));
 
     priv->plen = 576;
     priv->pbuf = malloc(priv->plen);
@@ -99,15 +100,15 @@ receiver_t *linux_rx_open(void)
     receiver_t *rx;
     struct private_s *priv;
 
-    rx = malloc(sizeof(rx));
+    rx = malloc(sizeof(*rx));
     if(rx == NULL) return NULL;
 
-    priv = malloc(sizeof(priv));
+    priv = malloc(sizeof(*priv));
     if(priv == NULL) return NULL;
 
     priv->fd = socket(PF_PACKET, SOCK_RAW, htons(ETH_P_IP));
     if(priv->fd < 0)
-	bomb(__FUNCTION__" failed: %s\n", strerror(errno));
+        bomb("%s: failed: %s\n", __FUNCTION__, strerror(errno));
 
     priv->plen = 576;
     priv->pbuf = malloc(priv->plen);
@@ -130,7 +131,7 @@ int linux_tx_send(transmitter_t *tx, char *p, int len)
     memcpy(priv->pbuf+5*4, p, len);
     i = send(priv->fd, priv->pbuf, len+5*4, 0);
     if(i < 0)
-	bomb(__FUNCTION__" failed: %s\n", strerror(errno));
+        bomb("%s: failed: %s\n", __FUNCTION__, strerror(errno));
     return i;
 }
 
@@ -147,7 +148,7 @@ void linux_tx_close(transmitter_t *tx)
 	    close(priv->fd);
 	free(priv);
     }
-    memset(tx, 0, sizeof(tx));
+    memset(tx, 0, sizeof(*tx));
     free(tx);
     return;
 }
@@ -196,7 +197,7 @@ void linux_rx_close(receiver_t *rx)
 	    close(priv->fd);
 	free(priv);
     }
-    memset(rx, 0, sizeof(rx));
+    memset(rx, 0, sizeof(*rx));
     free(rx);
     return;
 }

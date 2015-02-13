@@ -1,5 +1,5 @@
 
-CFLAGS=-Wall -g -pedantic
+CFLAGS=-Wall -g -pedantic -std=gnu11
 
 SYSOBJ=linux.o
 IPFT_OBJS=ipft.o util.o $(SYSOBJ)

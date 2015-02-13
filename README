@@ -1,4 +1,18 @@
 
+This is some ancient code I dug up.  I know there was a later version
+substantially cleaned up, which included OpenBSD support, but I have
+been unable to locate a backup of the CVS repository which contained
+it.
+
+I'm hoping that putting this up now will encourage me to find that
+backup, or at least do something interesting with this code.  I have
+no idea if it actually works in any non-trivial sense; no warranties,
+et cetera.  It's GPL'd; see the file COPYING for the license text.
+
+
+The original README (circa 2001) follows:
+-----------------------------------------
+
 This cool idea was conceived by Jamie Gamble <bit@distorted.wiw.org>,
 who wrote a paper on it.
 
